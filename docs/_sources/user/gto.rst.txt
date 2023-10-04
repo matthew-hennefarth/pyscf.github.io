@@ -3,7 +3,7 @@
 Molecular structure
 *******************
 
-*Modules*: :mod:`gto`
+*Modules*: :py:mod:`pyscf.gto`
 
 Initializing a molecule
 =======================
@@ -166,10 +166,10 @@ This function returns a (N,3) array for the coordinates of each atom::
    [0. 1. 0.]
    [0. 0. 1.]]
 
-.. _basis sets:
-
 Ghost atoms can also be specified when inputting the geometry.
 See :source:`examples/gto/03-ghost_atom.py` for examples.
+
+.. _basis sets:
 
 Basis set
 ---------
@@ -208,7 +208,7 @@ if the basis set does not match the element::
   mol.basis = {'H': gto.basis.load('sto3g', 'C')}
 
 Both :func:`gto.basis.parse` and :func:`gto.basis.load` return the basis set in the
-internal format (see :ref:`gto_basis`).
+internal format (see :ref:`Basis format`).
 
 The basis parser also supports ghost atoms::
 
@@ -476,21 +476,19 @@ and we can check the occupancy of the MOs in each irreducible representation::
   >>> from pyscf import symm
   >>> def myocc(mf):
   ...     mol = mf.mol
-  ...     irrep_id = mol.irrep_id
-  ...     so = mol.symm_orb
-  ...     orbsym = symm.label_orb_symm(mol, irrep_id, so, mf.mo_coeff)
+  ...     orbsym = symm.label_orb_symm(mol, mol.irrep_id, mol.symm_orb, mf.mo_coeff)
   ...     doccsym = numpy.array(orbsym)[mf.mo_occ==2]
   ...     soccsym = numpy.array(orbsym)[mf.mo_occ==1]
-  ...     for ir,irname in enumerate(mol.irrep_name):
+  ...     for ir,irname in zip(mol.irrep_id, mol.irrep_name):
   ...         print('%s, double-occ = %d, single-occ = %d' %
   ...               (irname, sum(doccsym==ir), sum(soccsym==ir)))
   >>> myocc(mf)
   Ag, double-occ = 3, single-occ = 0
-  B2g, double-occ = 0, single-occ = 0
+  B2g, double-occ = 0, single-occ = 1
   B3g, double-occ = 0, single-occ = 1
-  B1u, double-occ = 0, single-occ = 1
-  B2u, double-occ = 0, single-occ = 0
-  B3u, double-occ = 2, single-occ = 0
+  B1u, double-occ = 2, single-occ = 0
+  B2u, double-occ = 1, single-occ = 0
+  B3u, double-occ = 1, single-occ = 0
 
 To label the irreducible representation of given orbitals,
 :func:`symm.label_orb_symm` needs the information of the point group
@@ -511,7 +509,7 @@ function by assigning the number of alpha electrons and beta electrons
 Spin and charge
 ---------------
 
-Charge and spin multiplicity can be assigned to :class:`Mole` object::
+Charge and the number of unpaired electrons can be assigned to :class:`Mole` object::
 
   mol.charge = 1
   mol.spin = 1
@@ -602,4 +600,4 @@ to obtain the one- and two-electron AO integrals::
   overlap = mol.intor('int1e_ovlp')
   eri = mol.intor('int2e')
 
-For a full list of supported AO integrals, see :ref:`gto_moleintor`.
+For a full list of supported AO integrals, see :ref:`pyscf.gto.moleintor module`.

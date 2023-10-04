@@ -1,7 +1,6 @@
-
 <!DOCTYPE html>
 
-<html lang="en">
+<html lang="en" data-content_root="../../../">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -47,16 +46,14 @@
   
   
     <title>pyscf.dft.xcfun &#8212; PySCF</title>
-    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/material.css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/css/pyscf.css" />
-    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
-    <script src="../../../_static/jquery.js"></script>
-    <script src="../../../_static/underscore.js"></script>
-    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="../../../_static/doctools.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=92fd9be5" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/material.css?v=79c92029" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/pyscf.css?v=9b431c29" />
+    <script src="../../../_static/documentation_options.js?v=c3c8ae58"></script>
+    <script src="../../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <link rel="shortcut icon" href="../../../_static/favicon-32x32.png"/>
+    <link rel="icon" href="../../../_static/favicon-32x32.png"/>
     <link rel="author" title="About these documents" href="../../../about.html" />
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
@@ -86,8 +83,7 @@
         <a href="../../../index.html" title="PySCF"
            class="md-header-nav__button md-logo">
           
-              <img src="../../../_static/pyscf-logo-white.svg" height="26"
-                   alt="PySCF logo">
+            &nbsp;
           
         </a>
       </div>
@@ -96,7 +92,7 @@
       </div>
       <div class="md-flex__cell md-flex__cell--stretch">
         <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
-          <span class="md-header-nav__topic">PySCF 2.0</span>
+          <span class="md-header-nav__topic">PySCF 2.3</span>
           <span class="md-header-nav__topic"> pyscf.dft.xcfun </span>
         </div>
       </div>
@@ -107,7 +103,7 @@
   <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
     <form class="md-search__form" action="../../../search.html" method="get" name="search">
-      <input type="text" class="md-search__input" name="q" placeholder="Search"
+      <input type="text" class="md-search__input" name="q" placeholder=""Search""
              autocapitalize="off" autocomplete="off" spellcheck="false"
              data-md-component="query" data-md-state="active">
       <label class="md-icon md-search__icon" for="__search"></label>
@@ -200,11 +196,11 @@
   <label class="md-nav__title md-nav__title--site" for="__drawer">
     <a href="../../../index.html" title="PySCF" class="md-nav__button md-logo">
       
-        <img src="../../../_static/pyscf-logo-white.svg" alt=" logo" width="48" height="48">
+        <img src="../../../_static/" alt=" logo" width="48" height="48">
       
     </a>
     <a href="../../../index.html"
-       title="PySCF">PySCF 2.0</a>
+       title="PySCF">PySCF 2.3</a>
   </label>
     <div class="md-nav__source">
       <a href="https://github.com/pyscf/pyscf/" title="Go to repository" class="md-source" data-md-source="github">
@@ -228,7 +224,28 @@
     <li class="md-nav__item">
     
     
-      <a href="../../../install.html" class="md-nav__link">Install</a>
+      <a href="../../../install.html" class="md-nav__link">Install PySCF</a>
+      
+    
+    </li>
+    <li class="md-nav__item">
+    
+    
+      <a href="../../../install.html#advanced-build-options" class="md-nav__link">Advanced build options</a>
+      
+    
+    </li>
+    <li class="md-nav__item">
+    
+    
+      <a href="../../../install.html#install-pyscf-extensions" class="md-nav__link">Install PySCF extensions</a>
+      
+    
+    </li>
+    <li class="md-nav__item">
+    
+    
+      <a href="../../../install.html#troubleshooting" class="md-nav__link">Troubleshooting</a>
       
     
     </li>
@@ -320,10 +337,12 @@
 
 <span class="kn">import</span> <span class="nn">copy</span>
 <span class="kn">import</span> <span class="nn">ctypes</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">lru_cache</span>
 <span class="kn">import</span> <span class="nn">math</span>
 <span class="kn">import</span> <span class="nn">numpy</span>
 <span class="kn">from</span> <span class="nn">pyscf</span> <span class="kn">import</span> <span class="n">lib</span>
 <span class="kn">from</span> <span class="nn">pyscf.dft.xc.utils</span> <span class="kn">import</span> <span class="n">remove_dup</span><span class="p">,</span> <span class="n">format_xc_code</span>
+<span class="kn">from</span> <span class="nn">pyscf</span> <span class="kn">import</span> <span class="n">__config__</span>
 
 <span class="n">_itrf</span> <span class="o">=</span> <span class="n">lib</span><span class="o">.</span><span class="n">load_library</span><span class="p">(</span><span class="s1">'libxcfun_itrf'</span><span class="p">)</span>
 
@@ -440,12 +459,12 @@
 <span class="s1">'PBE0'</span>          <span class="p">:</span> <span class="s1">'.25*HF + .75*PBEX + PBEC'</span><span class="p">,</span>  <span class="c1"># Perdew-Burke-Ernzerhof, JCP, 110, 6158</span>
 <span class="s1">'PBE1PBE'</span>       <span class="p">:</span> <span class="s1">'PBE0'</span><span class="p">,</span>
 <span class="s1">'PBEH'</span>          <span class="p">:</span> <span class="s1">'PBE0'</span><span class="p">,</span>
-<span class="s1">'B3P86'</span>         <span class="p">:</span> <span class="s1">'.2*HF + .08*SLATER + .72*B88 + .81*P86C + .19*VWN5C'</span><span class="p">,</span>
+<span class="s1">'B3P86'</span>         <span class="p">:</span> <span class="s1">'B3P86G'</span><span class="p">,</span>
 <span class="s1">'B3P86G'</span>        <span class="p">:</span> <span class="s1">'.2*HF + .08*SLATER + .72*B88 + .81*P86C + .19*VWN3C'</span><span class="p">,</span>
-<span class="s1">'B3PW91'</span>        <span class="p">:</span> <span class="s1">'.2*HF + .08*SLATER + .72*B88 + .81*PW91C + .19*VWN5C'</span><span class="p">,</span>
-<span class="s1">'B3PW91G'</span>       <span class="p">:</span> <span class="s1">'.2*HF + .08*SLATER + .72*B88 + .81*PW91C + .19*VWN3C'</span><span class="p">,</span>
-<span class="c1"># Note, use VWN5 for B3LYP. It is different to the libxc default B3LYP</span>
-<span class="s1">'B3LYP'</span>         <span class="p">:</span> <span class="s1">'B3LYP5'</span><span class="p">,</span>
+<span class="s1">'B3P86V5'</span>       <span class="p">:</span> <span class="s1">'.2*HF + .08*SLATER + .72*B88 + .81*P86C + .19*VWN5C'</span><span class="p">,</span>
+<span class="s1">'B3PW91'</span>        <span class="p">:</span> <span class="s1">'.2*HF + .08*SLATER + .72*B88 + .81*PW91C + .19*PW92C'</span><span class="p">,</span>
+<span class="c1"># Note, B3LYP uses VWN3 https://doi.org/10.1016/S0009-2614(97)00207-8.</span>
+<span class="s1">'B3LYP'</span>         <span class="p">:</span> <span class="s1">'B3LYPG'</span><span class="p">,</span>
 <span class="s1">'B3LYP5'</span>        <span class="p">:</span> <span class="s1">'.2*HF + .08*SLATER + .72*B88 + .81*LYP + .19*VWN5C'</span><span class="p">,</span>
 <span class="s1">'B3LYPG'</span>        <span class="p">:</span> <span class="s1">'.2*HF + .08*SLATER + .72*B88 + .81*LYP + .19*VWN3C'</span><span class="p">,</span> <span class="c1"># B3LYP-VWN3 used by Gaussian and libxc</span>
 <span class="c1">#'O3LYP'         : '.1161*HF + .9262*SLATER + .8133*OPTXCORR + .81*LYP + .19*VWN5C',  # Mol. Phys. 99 607</span>
@@ -454,8 +473,9 @@
 <span class="c1">#'O3LYP'         : '.1161*HF + .9262*SLATER + 1.164393477*OPTXCORR + .81*LYP + .19*VWN5C', #1.164393477 = .8133*1.43169</span>
 <span class="c1">#'O3LYPG'        : '.1161*HF + .9262*SLATER + 1.164393477*OPTXCORR + .81*LYP + .19*VWN3C',</span>
 <span class="s1">'O3LYP'</span>         <span class="p">:</span> <span class="s1">'.1161*HF + 0.071006917*SLATER + .8133*OPTX, .81*LYP + .19*VWN5'</span><span class="p">,</span>  <span class="c1"># libxc implementation</span>
-<span class="s1">'X3LYP'</span>         <span class="p">:</span> <span class="s1">'.218*HF + .073*SLATER + 0.542385*B88 + .166615*PW91X + .871*LYP + .129*VWN5C'</span><span class="p">,</span>  <span class="c1"># Xu, PNAS, 101, 2673</span>
+<span class="s1">'X3LYP'</span>         <span class="p">:</span> <span class="s1">'X3LYPG'</span><span class="p">,</span>
 <span class="s1">'X3LYPG'</span>        <span class="p">:</span> <span class="s1">'.218*HF + .073*SLATER + 0.542385*B88 + .166615*PW91X + .871*LYP + .129*VWN3C'</span><span class="p">,</span>
+<span class="s1">'X3LYP5'</span>        <span class="p">:</span> <span class="s1">'.218*HF + .073*SLATER + 0.542385*B88 + .166615*PW91X + .871*LYP + .129*VWN5C'</span><span class="p">,</span>  <span class="c1"># Xu, PNAS, 101, 2673</span>
 <span class="c1"># Range-separated-hybrid functional: (alpha+beta)*SR_HF(0.33) + alpha*LR_HF(0.33)</span>
 <span class="c1"># Note default mu of xcfun is 0.4. It can cause discrepancy for CAMB3LYP</span>
 <span class="s1">'CAMB3LYP'</span>      <span class="p">:</span> <span class="s1">'0.19*SR_HF(0.33) + 0.65*LR_HF(0.33) + 0.46*BECKESRX + 0.35*B88 + VWN5C*0.19 + LYPC*0.81'</span><span class="p">,</span>
@@ -467,6 +487,10 @@
 <span class="s1">'TPSSH'</span>         <span class="p">:</span> <span class="s1">'0.1*HF + 0.9*TPSSX + TPSSC'</span><span class="p">,</span>
 <span class="s1">'TF'</span>            <span class="p">:</span> <span class="s1">'TFK'</span><span class="p">,</span>
 <span class="p">}</span>
+
+<span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">__config__</span><span class="p">,</span> <span class="s1">'B3LYP_WITH_VWN5'</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+    <span class="n">XC_CODES</span><span class="p">[</span><span class="s1">'B3P86'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'B3P86V5'</span>
+    <span class="n">XC_CODES</span><span class="p">[</span><span class="s1">'B3LYP'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'B3LYP5'</span>
 
 <span class="c1"># Some XC functionals have conventional name, like M06-L means M06-L for X</span>
 <span class="c1"># functional and M06-L for C functional, PBE mean PBE-X plus PBE-C. If the</span>
@@ -543,28 +567,30 @@
 <span class="n">MAX_DERIV_ORDER</span> <span class="o">=</span> <span class="mi">3</span>
 
 <span class="n">VV10_XC</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">'B97M_V'</span>    <span class="p">:</span> <span class="p">[</span><span class="mf">6.0</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">],</span>
-    <span class="s1">'WB97M_V'</span>   <span class="p">:</span> <span class="p">[</span><span class="mf">6.0</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">],</span>
-    <span class="s1">'WB97X_V'</span>   <span class="p">:</span> <span class="p">[</span><span class="mf">6.0</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">],</span>
-    <span class="s1">'VV10'</span>      <span class="p">:</span> <span class="p">[</span><span class="mf">5.9</span><span class="p">,</span> <span class="mf">0.0093</span><span class="p">],</span>
-    <span class="s1">'LC_VV10'</span>   <span class="p">:</span> <span class="p">[</span><span class="mf">6.3</span><span class="p">,</span> <span class="mf">0.0089</span><span class="p">],</span>
-    <span class="s1">'REVSCAN_VV10'</span><span class="p">:</span> <span class="p">[</span><span class="mf">9.8</span><span class="p">,</span> <span class="mf">0.0093</span><span class="p">],</span>
-    <span class="s1">'SCAN_RVV10'</span>  <span class="p">:</span> <span class="p">[</span><span class="mf">15.7</span><span class="p">,</span> <span class="mf">0.0093</span><span class="p">],</span>
-    <span class="s1">'SCAN_VV10'</span>   <span class="p">:</span> <span class="p">[</span><span class="mf">14.0</span><span class="p">,</span> <span class="mf">0.0093</span><span class="p">],</span>
-    <span class="s1">'SCANL_RVV10'</span> <span class="p">:</span> <span class="p">[</span><span class="mf">15.7</span><span class="p">,</span> <span class="mf">0.0093</span><span class="p">],</span>
-    <span class="s1">'SCANL_VV10'</span>  <span class="p">:</span> <span class="p">[</span><span class="mf">14.0</span><span class="p">,</span> <span class="mf">0.0093</span><span class="p">],</span>
+    <span class="s1">'B97M_V'</span>    <span class="p">:</span> <span class="p">(</span><span class="mf">6.0</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">),</span>
+    <span class="s1">'WB97M_V'</span>   <span class="p">:</span> <span class="p">(</span><span class="mf">6.0</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">),</span>
+    <span class="s1">'WB97X_V'</span>   <span class="p">:</span> <span class="p">(</span><span class="mf">6.0</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">),</span>
+    <span class="s1">'VV10'</span>      <span class="p">:</span> <span class="p">(</span><span class="mf">5.9</span><span class="p">,</span> <span class="mf">0.0093</span><span class="p">),</span>
+    <span class="s1">'LC_VV10'</span>   <span class="p">:</span> <span class="p">(</span><span class="mf">6.3</span><span class="p">,</span> <span class="mf">0.0089</span><span class="p">),</span>
+    <span class="s1">'REVSCAN_VV10'</span><span class="p">:</span> <span class="p">(</span><span class="mf">9.8</span><span class="p">,</span> <span class="mf">0.0093</span><span class="p">),</span>
+    <span class="s1">'SCAN_RVV10'</span>  <span class="p">:</span> <span class="p">(</span><span class="mf">15.7</span><span class="p">,</span> <span class="mf">0.0093</span><span class="p">),</span>
+    <span class="s1">'SCAN_VV10'</span>   <span class="p">:</span> <span class="p">(</span><span class="mf">14.0</span><span class="p">,</span> <span class="mf">0.0093</span><span class="p">),</span>
+    <span class="s1">'SCANL_RVV10'</span> <span class="p">:</span> <span class="p">(</span><span class="mf">15.7</span><span class="p">,</span> <span class="mf">0.0093</span><span class="p">),</span>
+    <span class="s1">'SCANL_VV10'</span>  <span class="p">:</span> <span class="p">(</span><span class="mf">14.0</span><span class="p">,</span> <span class="mf">0.0093</span><span class="p">),</span>
 <span class="p">}</span>
 <span class="n">VV10_XC</span><span class="o">.</span><span class="n">update</span><span class="p">([(</span><span class="n">key</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">'_'</span><span class="p">,</span> <span class="s1">''</span><span class="p">),</span> <span class="n">val</span><span class="p">)</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">VV10_XC</span><span class="o">.</span><span class="n">items</span><span class="p">()])</span>
 
-<div class="viewcode-block" id="xc_type"><a class="viewcode-back" href="../../../pyscf_api_docs/pyscf.dft.html#pyscf.dft.xcfun.xc_type">[docs]</a><span class="k">def</span> <span class="nf">xc_type</span><span class="p">(</span><span class="n">xc_code</span><span class="p">):</span>
+<div class="viewcode-block" id="xc_type">
+<a class="viewcode-back" href="../../../pyscf_api_docs/pyscf.dft.html#pyscf.dft.xcfun.xc_type">[docs]</a>
+<span class="nd">@lru_cache</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">xc_type</span><span class="p">(</span><span class="n">xc_code</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">xc_code</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">None</span>
     <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">xc_code</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">is_nlc</span><span class="p">(</span><span class="n">xc_code</span><span class="p">):</span>
-            <span class="k">return</span> <span class="s1">'NLC'</span>
         <span class="n">hyb</span><span class="p">,</span> <span class="n">fn_facs</span> <span class="o">=</span> <span class="n">parse_xc</span><span class="p">(</span><span class="n">xc_code</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">fn_facs</span> <span class="o">=</span> <span class="p">[(</span><span class="n">xc_code</span><span class="p">,</span> <span class="mi">1</span><span class="p">)]</span>  <span class="c1"># mimic fn_facs</span>
+
     <span class="k">if</span> <span class="ow">not</span> <span class="n">fn_facs</span><span class="p">:</span>
         <span class="k">return</span> <span class="s1">'HF'</span>
     <span class="k">elif</span> <span class="nb">all</span><span class="p">(</span><span class="n">_itrf</span><span class="o">.</span><span class="n">XCFUN_xc_type</span><span class="p">(</span><span class="n">ctypes</span><span class="o">.</span><span class="n">c_int</span><span class="p">(</span><span class="n">xid</span><span class="p">))</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">xid</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">fn_facs</span><span class="p">):</span>
@@ -573,13 +599,19 @@
         <span class="k">return</span> <span class="s1">'MGGA'</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="c1"># all((xid in GGA_IDS or xid in LDA_IDS for xid, val in fn_fns)):</span>
-        <span class="c1"># include hybrid_xc</span>
+        <span class="c1"># include hybrid_xc and NLC</span>
         <span class="k">return</span> <span class="s1">'GGA'</span></div>
 
-<div class="viewcode-block" id="is_lda"><a class="viewcode-back" href="../../../pyscf_api_docs/pyscf.dft.html#pyscf.dft.xcfun.is_lda">[docs]</a><span class="k">def</span> <span class="nf">is_lda</span><span class="p">(</span><span class="n">xc_code</span><span class="p">):</span>
+
+<div class="viewcode-block" id="is_lda">
+<a class="viewcode-back" href="../../../pyscf_api_docs/pyscf.dft.html#pyscf.dft.xcfun.is_lda">[docs]</a>
+<span class="k">def</span> <span class="nf">is_lda</span><span class="p">(</span><span class="n">xc_code</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">xc_type</span><span class="p">(</span><span class="n">xc_code</span><span class="p">)</span> <span class="o">==</span> <span class="s1">'LDA'</span></div>
 
-<div class="viewcode-block" id="is_hybrid_xc"><a class="viewcode-back" href="../../../pyscf_api_docs/pyscf.dft.html#pyscf.dft.xcfun.is_hybrid_xc">[docs]</a><span class="k">def</span> <span class="nf">is_hybrid_xc</span><span class="p">(</span><span class="n">xc_code</span><span class="p">):</span>
+
+<div class="viewcode-block" id="is_hybrid_xc">
+<a class="viewcode-back" href="../../../pyscf_api_docs/pyscf.dft.html#pyscf.dft.xcfun.is_hybrid_xc">[docs]</a>
+<span class="k">def</span> <span class="nf">is_hybrid_xc</span><span class="p">(</span><span class="n">xc_code</span><span class="p">):</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">xc_code</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
         <span class="n">xc_code</span> <span class="o">=</span> <span class="n">xc_code</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">' '</span><span class="p">,</span><span class="s1">''</span><span class="p">)</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
         <span class="k">return</span> <span class="p">(</span><span class="s1">'HF'</span> <span class="ow">in</span> <span class="n">xc_code</span> <span class="ow">or</span> <span class="n">xc_code</span> <span class="ow">in</span> <span class="n">HYB_XC</span> <span class="ow">or</span>
@@ -589,65 +621,94 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="k">return</span> <span class="nb">any</span><span class="p">((</span><span class="n">is_hybrid_xc</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">xc_code</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="is_meta_gga"><a class="viewcode-back" href="../../../pyscf_api_docs/pyscf.dft.html#pyscf.dft.xcfun.is_meta_gga">[docs]</a><span class="k">def</span> <span class="nf">is_meta_gga</span><span class="p">(</span><span class="n">xc_code</span><span class="p">):</span>
+
+<div class="viewcode-block" id="is_meta_gga">
+<a class="viewcode-back" href="../../../pyscf_api_docs/pyscf.dft.html#pyscf.dft.xcfun.is_meta_gga">[docs]</a>
+<span class="k">def</span> <span class="nf">is_meta_gga</span><span class="p">(</span><span class="n">xc_code</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">xc_type</span><span class="p">(</span><span class="n">xc_code</span><span class="p">)</span> <span class="o">==</span> <span class="s1">'MGGA'</span></div>
 
-<div class="viewcode-block" id="is_gga"><a class="viewcode-back" href="../../../pyscf_api_docs/pyscf.dft.html#pyscf.dft.xcfun.is_gga">[docs]</a><span class="k">def</span> <span class="nf">is_gga</span><span class="p">(</span><span class="n">xc_code</span><span class="p">):</span>
+
+<div class="viewcode-block" id="is_gga">
+<a class="viewcode-back" href="../../../pyscf_api_docs/pyscf.dft.html#pyscf.dft.xcfun.is_gga">[docs]</a>
+<span class="k">def</span> <span class="nf">is_gga</span><span class="p">(</span><span class="n">xc_code</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">xc_type</span><span class="p">(</span><span class="n">xc_code</span><span class="p">)</span> <span class="o">==</span> <span class="s1">'GGA'</span></div>
 
-<div class="viewcode-block" id="is_nlc"><a class="viewcode-back" href="../../../pyscf_api_docs/pyscf.dft.html#pyscf.dft.xcfun.is_nlc">[docs]</a><span class="k">def</span> <span class="nf">is_nlc</span><span class="p">(</span><span class="n">xc_code</span><span class="p">):</span>
-    <span class="k">return</span> <span class="s1">'__VV10'</span> <span class="ow">in</span> <span class="n">xc_code</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="nlc_coeff"><a class="viewcode-back" href="../../../pyscf_api_docs/pyscf.dft.html#pyscf.dft.xcfun.nlc_coeff">[docs]</a><span class="k">def</span> <span class="nf">nlc_coeff</span><span class="p">(</span><span class="n">xc_code</span><span class="p">):</span>
-    <span class="sd">'''Get NLC coefficients</span>
+<span class="c1"># Assign a temporary Id to VV10 functionals. parse_xc function needs them to</span>
+<span class="c1"># parse NLC functionals</span>
+<span class="n">XC_CODES</span><span class="o">.</span><span class="n">update</span><span class="p">([(</span><span class="n">key</span><span class="p">,</span> <span class="mi">5000</span><span class="o">+</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">key</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">VV10_XC</span><span class="p">)])</span>
+<span class="n">VV10_XC</span><span class="o">.</span><span class="n">update</span><span class="p">([(</span><span class="mi">5000</span><span class="o">+</span><span class="n">i</span><span class="p">,</span> <span class="n">VV10_XC</span><span class="p">[</span><span class="n">key</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">key</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">VV10_XC</span><span class="p">)])</span>
+
+<div class="viewcode-block" id="is_nlc">
+<a class="viewcode-back" href="../../../pyscf_api_docs/pyscf.dft.html#pyscf.dft.xcfun.is_nlc">[docs]</a>
+<span class="k">def</span> <span class="nf">is_nlc</span><span class="p">(</span><span class="n">xc_code</span><span class="p">):</span>
+    <span class="n">fn_facs</span> <span class="o">=</span> <span class="n">parse_xc</span><span class="p">(</span><span class="n">xc_code</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">return</span> <span class="nb">any</span><span class="p">(</span><span class="n">xid</span> <span class="o">&gt;=</span> <span class="mi">5000</span> <span class="k">for</span> <span class="n">xid</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">fn_facs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="nlc_coeff">
+<a class="viewcode-back" href="../../../pyscf_api_docs/pyscf.dft.html#pyscf.dft.xcfun.nlc_coeff">[docs]</a>
+<span class="k">def</span> <span class="nf">nlc_coeff</span><span class="p">(</span><span class="n">xc_code</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">'''Get NLC coefficients</span>
 <span class="sd">    '''</span>
     <span class="n">xc_code</span> <span class="o">=</span> <span class="n">xc_code</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
-
-    <span class="n">nlc_part</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="k">if</span> <span class="s1">'__VV10'</span> <span class="ow">in</span> <span class="n">xc_code</span><span class="p">:</span>
-        <span class="n">xc_code</span><span class="p">,</span> <span class="n">nlc_part</span> <span class="o">=</span> <span class="n">xc_code</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'__'</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">'Deprecated notation for NLC functional.'</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">xc_code</span> <span class="ow">in</span> <span class="n">VV10_XC</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">VV10_XC</span><span class="p">[</span><span class="n">xc_code</span><span class="p">]</span>
-    <span class="k">elif</span> <span class="n">nlc_part</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="c1"># Use VV10 NLC parameters by default for the general case</span>
-        <span class="k">return</span> <span class="n">VV10_XC</span><span class="p">[</span><span class="n">nlc_part</span><span class="p">]</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
-            <span class="s1">'</span><span class="si">%s</span><span class="s1"> does not have NLC part. Available functionals are </span><span class="si">%s</span><span class="s1">'</span> <span class="o">%</span>
-            <span class="p">(</span><span class="n">xc_code</span><span class="p">,</span> <span class="s1">', '</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">VV10_XC</span><span class="o">.</span><span class="n">keys</span><span class="p">())))</span></div>
+    <span class="n">fn_facs</span> <span class="o">=</span> <span class="n">parse_xc</span><span class="p">(</span><span class="n">xc_code</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">nlc_pars</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">xid</span><span class="p">,</span> <span class="n">fac</span> <span class="ow">in</span> <span class="n">fn_facs</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">xid</span> <span class="o">&gt;=</span> <span class="mi">5000</span><span class="p">:</span>
+            <span class="n">nlc_pars</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">VV10_XC</span><span class="p">[</span><span class="n">xid</span><span class="p">],</span> <span class="n">fac</span><span class="p">))</span>
+    <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">nlc_pars</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="rsh_coeff"><a class="viewcode-back" href="../../../pyscf_api_docs/pyscf.dft.html#pyscf.dft.xcfun.rsh_coeff">[docs]</a><span class="k">def</span> <span class="nf">rsh_coeff</span><span class="p">(</span><span class="n">xc_code</span><span class="p">):</span>
-    <span class="sd">'''Get Range-separated-hybrid coefficients</span>
+
+<div class="viewcode-block" id="rsh_coeff">
+<a class="viewcode-back" href="../../../pyscf_api_docs/pyscf.dft.html#pyscf.dft.xcfun.rsh_coeff">[docs]</a>
+<span class="k">def</span> <span class="nf">rsh_coeff</span><span class="p">(</span><span class="n">xc_code</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">'''Get Range-separated-hybrid coefficients</span>
 <span class="sd">    '''</span>
     <span class="n">hyb</span><span class="p">,</span> <span class="n">fn_facs</span> <span class="o">=</span> <span class="n">parse_xc</span><span class="p">(</span><span class="n">xc_code</span><span class="p">)</span>
     <span class="n">hyb</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">omega</span> <span class="o">=</span> <span class="n">hyb</span>
     <span class="n">beta</span> <span class="o">=</span> <span class="n">hyb</span> <span class="o">-</span> <span class="n">alpha</span>
     <span class="k">return</span> <span class="n">omega</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span></div>
 
-<div class="viewcode-block" id="max_deriv_order"><a class="viewcode-back" href="../../../pyscf_api_docs/pyscf.dft.html#pyscf.dft.xcfun.max_deriv_order">[docs]</a><span class="k">def</span> <span class="nf">max_deriv_order</span><span class="p">(</span><span class="n">xc_code</span><span class="p">):</span>
-    <span class="n">hyb</span><span class="p">,</span> <span class="n">fn_facs</span> <span class="o">=</span> <span class="n">parse_xc</span><span class="p">(</span><span class="n">xc_code</span><span class="p">)</span>
+
+<div class="viewcode-block" id="max_deriv_order">
+<a class="viewcode-back" href="../../../pyscf_api_docs/pyscf.dft.html#pyscf.dft.xcfun.max_deriv_order">[docs]</a>
+<span class="k">def</span> <span class="nf">max_deriv_order</span><span class="p">(</span><span class="n">xc_code</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">MAX_DERIV_ORDER</span></div>
 
-<div class="viewcode-block" id="test_deriv_order"><a class="viewcode-back" href="../../../pyscf_api_docs/pyscf.dft.html#pyscf.dft.xcfun.test_deriv_order">[docs]</a><span class="k">def</span> <span class="nf">test_deriv_order</span><span class="p">(</span><span class="n">xc_code</span><span class="p">,</span> <span class="n">deriv</span><span class="p">,</span> <span class="n">raise_error</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+
+<div class="viewcode-block" id="test_deriv_order">
+<a class="viewcode-back" href="../../../pyscf_api_docs/pyscf.dft.html#pyscf.dft.xcfun.test_deriv_order">[docs]</a>
+<span class="k">def</span> <span class="nf">test_deriv_order</span><span class="p">(</span><span class="n">xc_code</span><span class="p">,</span> <span class="n">deriv</span><span class="p">,</span> <span class="n">raise_error</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="n">support</span> <span class="o">=</span> <span class="n">deriv</span> <span class="o">&lt;=</span> <span class="n">max_deriv_order</span><span class="p">(</span><span class="n">xc_code</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">support</span> <span class="ow">and</span> <span class="n">raise_error</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">'xcfun library does not support derivative '</span>
                                   <span class="s1">'order </span><span class="si">%d</span><span class="s1"> for  </span><span class="si">%s</span><span class="s1">'</span> <span class="o">%</span> <span class="p">(</span><span class="n">deriv</span><span class="p">,</span> <span class="n">xc_code</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">support</span></div>
 
-<div class="viewcode-block" id="hybrid_coeff"><a class="viewcode-back" href="../../../pyscf_api_docs/pyscf.dft.html#pyscf.dft.xcfun.hybrid_coeff">[docs]</a><span class="k">def</span> <span class="nf">hybrid_coeff</span><span class="p">(</span><span class="n">xc_code</span><span class="p">,</span> <span class="n">spin</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">is_nlc</span><span class="p">(</span><span class="n">xc_code</span><span class="p">):</span>
-        <span class="k">return</span> <span class="mi">0</span>
+
+<div class="viewcode-block" id="hybrid_coeff">
+<a class="viewcode-back" href="../../../pyscf_api_docs/pyscf.dft.html#pyscf.dft.xcfun.hybrid_coeff">[docs]</a>
+<span class="k">def</span> <span class="nf">hybrid_coeff</span><span class="p">(</span><span class="n">xc_code</span><span class="p">,</span> <span class="n">spin</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
     <span class="n">hyb</span><span class="p">,</span> <span class="n">fn_facs</span> <span class="o">=</span> <span class="n">parse_xc</span><span class="p">(</span><span class="n">xc_code</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">hyb</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="parse_xc_name"><a class="viewcode-back" href="../../../pyscf_api_docs/pyscf.dft.html#pyscf.dft.xcfun.parse_xc_name">[docs]</a><span class="k">def</span> <span class="nf">parse_xc_name</span><span class="p">(</span><span class="n">xc_name</span><span class="p">):</span>
+
+<div class="viewcode-block" id="parse_xc_name">
+<a class="viewcode-back" href="../../../pyscf_api_docs/pyscf.dft.html#pyscf.dft.xcfun.parse_xc_name">[docs]</a>
+<span class="k">def</span> <span class="nf">parse_xc_name</span><span class="p">(</span><span class="n">xc_name</span><span class="p">):</span>
     <span class="n">fn_facs</span> <span class="o">=</span> <span class="n">parse_xc</span><span class="p">(</span><span class="n">xc_name</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">fn_facs</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">fn_facs</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="parse_xc"><a class="viewcode-back" href="../../../pyscf_api_docs/pyscf.dft.html#pyscf.dft.xcfun.parse_xc">[docs]</a><span class="k">def</span> <span class="nf">parse_xc</span><span class="p">(</span><span class="n">description</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">'''Rules to input functional description:</span>
+
+<div class="viewcode-block" id="parse_xc">
+<a class="viewcode-back" href="../../../pyscf_api_docs/pyscf.dft.html#pyscf.dft.xcfun.parse_xc">[docs]</a>
+<span class="nd">@lru_cache</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">parse_xc</span><span class="p">(</span><span class="n">description</span><span class="p">):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">'''Rules to input functional description:</span>
 
 <span class="sd">    * The given functional description must be a one-line string.</span>
 <span class="sd">    * The functional description is case-insensitive.</span>
@@ -698,9 +759,9 @@
 <span class="sd">    '''</span>
     <span class="n">hyb</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>  <span class="c1"># hybrid, alpha, omega</span>
     <span class="k">if</span> <span class="n">description</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">hyb</span><span class="p">,</span> <span class="p">[]</span>
+        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">hyb</span><span class="p">),</span> <span class="p">()</span>
     <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">description</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">hyb</span><span class="p">,</span> <span class="p">[(</span><span class="n">description</span><span class="p">,</span> <span class="mf">1.</span><span class="p">)]</span>
+        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">hyb</span><span class="p">),</span> <span class="p">((</span><span class="n">description</span><span class="p">,</span> <span class="mf">1.</span><span class="p">),)</span>
     <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">description</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span> <span class="c1">#isinstance(description, (tuple,list)):</span>
         <span class="k">return</span> <span class="n">parse_xc</span><span class="p">(</span><span class="s1">'</span><span class="si">%s</span><span class="s1">,</span><span class="si">%s</span><span class="s1">'</span> <span class="o">%</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">description</span><span class="p">))</span>
 
@@ -790,7 +851,8 @@
             <span class="n">parse_token</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="s1">'XC'</span><span class="p">,</span> <span class="n">search_xc_alias</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">hyb</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span> <span class="c1"># No omega is assigned. LR_HF is 0 for normal Coulomb operator</span>
         <span class="n">hyb</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">return</span> <span class="n">hyb</span><span class="p">,</span> <span class="n">remove_dup</span><span class="p">(</span><span class="n">fn_facs</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">hyb</span><span class="p">),</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">remove_dup</span><span class="p">(</span><span class="n">fn_facs</span><span class="p">))</span></div>
+
 
 <span class="n">_NAME_WITH_DASH</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'SR-HF'</span>  <span class="p">:</span> <span class="s1">'SR_HF'</span><span class="p">,</span>
                    <span class="s1">'LR-HF'</span>  <span class="p">:</span> <span class="s1">'LR_HF'</span><span class="p">,</span>
@@ -800,16 +862,19 @@
                    <span class="s1">'M06-2X'</span> <span class="p">:</span> <span class="s1">'M062X'</span><span class="p">,}</span>
 
 
-<div class="viewcode-block" id="eval_xc"><a class="viewcode-back" href="../../../pyscf_api_docs/pyscf.dft.html#pyscf.dft.xcfun.eval_xc">[docs]</a><span class="k">def</span> <span class="nf">eval_xc</span><span class="p">(</span><span class="n">xc_code</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">spin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">relativity</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">deriv</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">omega</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">'''Interface to call xcfun library to evaluate XC functional, potential</span>
+<div class="viewcode-block" id="eval_xc">
+<a class="viewcode-back" href="../../../pyscf_api_docs/pyscf.dft.html#pyscf.dft.xcfun.eval_xc">[docs]</a>
+<span class="k">def</span> <span class="nf">eval_xc</span><span class="p">(</span><span class="n">xc_code</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">spin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">relativity</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">deriv</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">omega</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">'''Interface to call xcfun library to evaluate XC functional, potential</span>
 <span class="sd">    and functional derivatives.</span>
 
 <span class="sd">    See also :func:`pyscf.dft.libxc.eval_xc`</span>
 <span class="sd">    '''</span>
     <span class="n">hyb</span><span class="p">,</span> <span class="n">fn_facs</span> <span class="o">=</span> <span class="n">parse_xc</span><span class="p">(</span><span class="n">xc_code</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">omega</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">hyb</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">omega</span><span class="p">)</span>
+        <span class="n">hyb</span> <span class="o">=</span> <span class="n">hyb</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">omega</span><span class="p">),)</span>
     <span class="k">return</span> <span class="n">_eval_xc</span><span class="p">(</span><span class="n">hyb</span><span class="p">,</span> <span class="n">fn_facs</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">spin</span><span class="p">,</span> <span class="n">relativity</span><span class="p">,</span> <span class="n">deriv</span><span class="p">,</span> <span class="n">verbose</span><span class="p">)</span></div>
+
 
 <span class="n">XC_D0</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="n">XC_D1</span> <span class="o">=</span> <span class="mi">1</span>
@@ -1118,14 +1183,14 @@
 <span class="n">XC_D0000003</span> <span class="o">=</span> <span class="mi">119</span>
 
 <span class="k">def</span> <span class="nf">_eval_xc</span><span class="p">(</span><span class="n">hyb</span><span class="p">,</span> <span class="n">fn_facs</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">spin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">relativity</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">deriv</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="k">assert</span><span class="p">(</span><span class="n">deriv</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="p">(</span><span class="n">deriv</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">spin</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">rho_u</span> <span class="o">=</span> <span class="n">rho_d</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="s1">'C'</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">rho_u</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">rho</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">order</span><span class="o">=</span><span class="s1">'C'</span><span class="p">)</span>
         <span class="n">rho_d</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">rho</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">order</span><span class="o">=</span><span class="s1">'C'</span><span class="p">)</span>
-    <span class="k">assert</span><span class="p">(</span><span class="n">rho_u</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="n">numpy</span><span class="o">.</span><span class="n">double</span><span class="p">)</span>
-    <span class="k">assert</span><span class="p">(</span><span class="n">rho_d</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="n">numpy</span><span class="o">.</span><span class="n">double</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="p">(</span><span class="n">rho_u</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="n">numpy</span><span class="o">.</span><span class="n">double</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="p">(</span><span class="n">rho_d</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="n">numpy</span><span class="o">.</span><span class="n">double</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">rho_u</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
         <span class="n">rho_u</span> <span class="o">=</span> <span class="n">rho_u</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
@@ -1146,18 +1211,24 @@
         <span class="nb">all</span><span class="p">((</span><span class="n">is_lda</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">fn_ids</span><span class="p">))):</span>  <span class="c1"># LDA</span>
         <span class="k">if</span> <span class="n">spin</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">nvar</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="n">xctype</span> <span class="o">=</span> <span class="s1">'R-LDA'</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">nvar</span> <span class="o">=</span> <span class="mi">2</span>
+            <span class="n">xctype</span> <span class="o">=</span> <span class="s1">'U-LDA'</span>
     <span class="k">elif</span> <span class="nb">any</span><span class="p">((</span><span class="n">is_meta_gga</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">fn_ids</span><span class="p">)):</span>
         <span class="k">if</span> <span class="n">spin</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">nvar</span> <span class="o">=</span> <span class="mi">3</span>
+            <span class="n">xctype</span> <span class="o">=</span> <span class="s1">'R-MGGA'</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">nvar</span> <span class="o">=</span> <span class="mi">7</span>
+            <span class="n">xctype</span> <span class="o">=</span> <span class="s1">'U-MGGA'</span>
     <span class="k">else</span><span class="p">:</span>  <span class="c1"># GGA</span>
         <span class="k">if</span> <span class="n">spin</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">nvar</span> <span class="o">=</span> <span class="mi">2</span>
+            <span class="n">xctype</span> <span class="o">=</span> <span class="s1">'R-GGA'</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">nvar</span> <span class="o">=</span> <span class="mi">5</span>
+            <span class="n">xctype</span> <span class="o">=</span> <span class="s1">'U-GGA'</span>
     <span class="n">outlen</span> <span class="o">=</span> <span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">factorial</span><span class="p">(</span><span class="n">nvar</span><span class="o">+</span><span class="n">deriv</span><span class="p">)</span> <span class="o">//</span>
               <span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">factorial</span><span class="p">(</span><span class="n">nvar</span><span class="p">)</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">factorial</span><span class="p">(</span><span class="n">deriv</span><span class="p">)))</span>
     <span class="n">outbuf</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">ngrids</span><span class="p">,</span><span class="n">outlen</span><span class="p">))</span>
@@ -1173,101 +1244,140 @@
                             <span class="n">rho_d</span><span class="o">.</span><span class="n">ctypes</span><span class="o">.</span><span class="n">data_as</span><span class="p">(</span><span class="n">ctypes</span><span class="o">.</span><span class="n">c_void_p</span><span class="p">),</span>
                             <span class="n">outbuf</span><span class="o">.</span><span class="n">ctypes</span><span class="o">.</span><span class="n">data_as</span><span class="p">(</span><span class="n">ctypes</span><span class="o">.</span><span class="n">c_void_p</span><span class="p">))</span>
 
-    <span class="n">outbuf</span> <span class="o">=</span> <span class="n">outbuf</span><span class="o">.</span><span class="n">T</span>
+    <span class="n">outbuf</span> <span class="o">=</span> <span class="n">lib</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">outbuf</span><span class="p">)</span>
     <span class="n">exc</span> <span class="o">=</span> <span class="n">outbuf</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">vxc</span> <span class="o">=</span> <span class="n">fxc</span> <span class="o">=</span> <span class="n">kxc</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="k">if</span> <span class="n">nvar</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">xctype</span> <span class="o">==</span> <span class="s1">'R-LDA'</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">deriv</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">vxc</span> <span class="o">=</span> <span class="p">(</span><span class="n">outbuf</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="n">vxc</span> <span class="o">=</span> <span class="p">[</span><span class="n">outbuf</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
         <span class="k">if</span> <span class="n">deriv</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="n">fxc</span> <span class="o">=</span> <span class="p">(</span><span class="n">outbuf</span><span class="p">[</span><span class="mi">2</span><span class="p">],)</span> <span class="o">+</span> <span class="p">(</span><span class="kc">None</span><span class="p">,)</span><span class="o">*</span><span class="mi">9</span>
+            <span class="n">fxc</span> <span class="o">=</span> <span class="p">[</span><span class="n">outbuf</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span>
         <span class="k">if</span> <span class="n">deriv</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
-            <span class="n">kxc</span> <span class="o">=</span> <span class="p">(</span><span class="n">outbuf</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">nvar</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">spin</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># GGA</span>
-            <span class="k">if</span> <span class="n">deriv</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="n">vxc</span> <span class="o">=</span> <span class="p">(</span><span class="n">outbuf</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">outbuf</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">deriv</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-                <span class="n">fxc</span> <span class="o">=</span> <span class="p">(</span><span class="n">outbuf</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">outbuf</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="n">outbuf</span><span class="p">[</span><span class="mi">5</span><span class="p">],)</span> <span class="o">+</span> <span class="p">(</span><span class="kc">None</span><span class="p">,)</span><span class="o">*</span><span class="mi">7</span>
-            <span class="k">if</span> <span class="n">deriv</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
-                <span class="n">kxc</span> <span class="o">=</span> <span class="n">outbuf</span><span class="p">[</span><span class="mi">6</span><span class="p">:</span><span class="mi">10</span><span class="p">]</span>
-        <span class="k">else</span><span class="p">:</span>  <span class="c1"># LDA</span>
-            <span class="k">if</span> <span class="n">deriv</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="n">vxc</span> <span class="o">=</span> <span class="p">(</span><span class="n">outbuf</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">deriv</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-                <span class="n">fxc</span> <span class="o">=</span> <span class="p">(</span><span class="n">outbuf</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">6</span><span class="p">]</span><span class="o">.</span><span class="n">T</span><span class="p">,)</span> <span class="o">+</span> <span class="p">(</span><span class="kc">None</span><span class="p">,)</span><span class="o">*</span><span class="mi">9</span>
-            <span class="k">if</span> <span class="n">deriv</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
-                <span class="n">kxc</span> <span class="o">=</span> <span class="p">(</span><span class="n">outbuf</span><span class="p">[</span><span class="mi">6</span><span class="p">:</span><span class="mi">10</span><span class="p">]</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">nvar</span> <span class="o">==</span> <span class="mi">5</span><span class="p">:</span>
+            <span class="n">kxc</span> <span class="o">=</span> <span class="p">[</span><span class="n">outbuf</span><span class="p">[</span><span class="mi">3</span><span class="p">]]</span>
+    <span class="k">elif</span> <span class="n">xctype</span> <span class="o">==</span> <span class="s1">'R-GGA'</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">deriv</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">vxc</span> <span class="o">=</span> <span class="p">(</span><span class="n">outbuf</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">outbuf</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">6</span><span class="p">]</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="n">vxc</span> <span class="o">=</span> <span class="p">[</span><span class="n">outbuf</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">outbuf</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span>
         <span class="k">if</span> <span class="n">deriv</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="n">fxc</span> <span class="o">=</span> <span class="p">(</span><span class="n">outbuf</span><span class="p">[[</span><span class="n">XC_D20000</span><span class="p">,</span><span class="n">XC_D11000</span><span class="p">,</span><span class="n">XC_D02000</span><span class="p">]]</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
+            <span class="n">fxc</span> <span class="o">=</span> <span class="p">[</span><span class="n">outbuf</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">outbuf</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="n">outbuf</span><span class="p">[</span><span class="mi">5</span><span class="p">]]</span>
+        <span class="k">if</span> <span class="n">deriv</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">kxc</span> <span class="o">=</span> <span class="p">[</span><span class="n">outbuf</span><span class="p">[</span><span class="mi">6</span><span class="p">],</span> <span class="n">outbuf</span><span class="p">[</span><span class="mi">7</span><span class="p">],</span> <span class="n">outbuf</span><span class="p">[</span><span class="mi">8</span><span class="p">],</span> <span class="n">outbuf</span><span class="p">[</span><span class="mi">9</span><span class="p">]]</span>
+    <span class="k">elif</span> <span class="n">xctype</span> <span class="o">==</span> <span class="s1">'U-LDA'</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">deriv</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">vxc</span> <span class="o">=</span> <span class="p">[</span><span class="n">outbuf</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">T</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">deriv</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">fxc</span> <span class="o">=</span> <span class="p">[</span><span class="n">outbuf</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">6</span><span class="p">]</span><span class="o">.</span><span class="n">T</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">deriv</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">kxc</span> <span class="o">=</span> <span class="p">[</span><span class="n">outbuf</span><span class="p">[</span><span class="mi">6</span><span class="p">:</span><span class="mi">10</span><span class="p">]</span><span class="o">.</span><span class="n">T</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="n">xctype</span> <span class="o">==</span> <span class="s1">'U-GGA'</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">deriv</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">vxc</span> <span class="o">=</span> <span class="p">[</span><span class="n">outbuf</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">outbuf</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">6</span><span class="p">]</span><span class="o">.</span><span class="n">T</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">deriv</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">fxc</span> <span class="o">=</span> <span class="p">[</span><span class="n">outbuf</span><span class="p">[[</span><span class="n">XC_D20000</span><span class="p">,</span><span class="n">XC_D11000</span><span class="p">,</span><span class="n">XC_D02000</span><span class="p">]]</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
                    <span class="n">outbuf</span><span class="p">[[</span><span class="n">XC_D10100</span><span class="p">,</span><span class="n">XC_D10010</span><span class="p">,</span><span class="n">XC_D10001</span><span class="p">,</span>
                            <span class="n">XC_D01100</span><span class="p">,</span><span class="n">XC_D01010</span><span class="p">,</span><span class="n">XC_D01001</span><span class="p">]]</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
-                   <span class="n">outbuf</span><span class="p">[[</span><span class="n">XC_D00200</span><span class="p">,</span><span class="n">XC_D00110</span><span class="p">,</span><span class="n">XC_D00101</span><span class="p">,</span><span class="n">XC_D00020</span><span class="p">,</span><span class="n">XC_D00011</span><span class="p">,</span><span class="n">XC_D00002</span><span class="p">]]</span><span class="o">.</span><span class="n">T</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="kc">None</span><span class="p">,)</span><span class="o">*</span><span class="mi">7</span>
+                   <span class="n">outbuf</span><span class="p">[[</span><span class="n">XC_D00200</span><span class="p">,</span><span class="n">XC_D00110</span><span class="p">,</span><span class="n">XC_D00101</span><span class="p">,</span><span class="n">XC_D00020</span><span class="p">,</span><span class="n">XC_D00011</span><span class="p">,</span><span class="n">XC_D00002</span><span class="p">]]</span><span class="o">.</span><span class="n">T</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">deriv</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
-            <span class="n">kxc</span> <span class="o">=</span> <span class="p">(</span><span class="n">outbuf</span><span class="p">[[</span><span class="n">XC_D30000</span><span class="p">,</span><span class="n">XC_D21000</span><span class="p">,</span><span class="n">XC_D12000</span><span class="p">,</span><span class="n">XC_D03000</span><span class="p">]]</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
+            <span class="n">kxc</span> <span class="o">=</span> <span class="p">[</span><span class="n">outbuf</span><span class="p">[[</span><span class="n">XC_D30000</span><span class="p">,</span><span class="n">XC_D21000</span><span class="p">,</span><span class="n">XC_D12000</span><span class="p">,</span><span class="n">XC_D03000</span><span class="p">]]</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
                    <span class="n">outbuf</span><span class="p">[[</span><span class="n">XC_D20100</span><span class="p">,</span><span class="n">XC_D20010</span><span class="p">,</span><span class="n">XC_D20001</span><span class="p">,</span>
                            <span class="n">XC_D11100</span><span class="p">,</span><span class="n">XC_D11010</span><span class="p">,</span><span class="n">XC_D11001</span><span class="p">,</span>
                            <span class="n">XC_D02100</span><span class="p">,</span><span class="n">XC_D02010</span><span class="p">,</span><span class="n">XC_D02001</span><span class="p">]]</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
                    <span class="n">outbuf</span><span class="p">[[</span><span class="n">XC_D10200</span><span class="p">,</span><span class="n">XC_D10110</span><span class="p">,</span><span class="n">XC_D10101</span><span class="p">,</span><span class="n">XC_D10020</span><span class="p">,</span><span class="n">XC_D10011</span><span class="p">,</span><span class="n">XC_D10002</span><span class="p">,</span>
                            <span class="n">XC_D01200</span><span class="p">,</span><span class="n">XC_D01110</span><span class="p">,</span><span class="n">XC_D01101</span><span class="p">,</span><span class="n">XC_D01020</span><span class="p">,</span><span class="n">XC_D01011</span><span class="p">,</span><span class="n">XC_D01002</span><span class="p">]]</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
                    <span class="n">outbuf</span><span class="p">[[</span><span class="n">XC_D00300</span><span class="p">,</span><span class="n">XC_D00210</span><span class="p">,</span><span class="n">XC_D00201</span><span class="p">,</span><span class="n">XC_D00120</span><span class="p">,</span><span class="n">XC_D00111</span><span class="p">,</span>
-                           <span class="n">XC_D00102</span><span class="p">,</span><span class="n">XC_D00030</span><span class="p">,</span><span class="n">XC_D00021</span><span class="p">,</span><span class="n">XC_D00012</span><span class="p">,</span><span class="n">XC_D00003</span><span class="p">]]</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+                           <span class="n">XC_D00102</span><span class="p">,</span><span class="n">XC_D00030</span><span class="p">,</span><span class="n">XC_D00021</span><span class="p">,</span><span class="n">XC_D00012</span><span class="p">,</span><span class="n">XC_D00003</span><span class="p">]]</span><span class="o">.</span><span class="n">T</span><span class="p">]</span>
 <span class="c1"># MGGA/MLGGA: Note the MLGGA interface are not implemented. MGGA only needs 3</span>
 <span class="c1"># input arguments.  To make the interface compatible with libxc, treat MGGA as</span>
 <span class="c1"># MLGGA</span>
-    <span class="k">elif</span> <span class="n">nvar</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">xctype</span> <span class="o">==</span> <span class="s1">'R-MGGA'</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">deriv</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">vxc</span> <span class="o">=</span> <span class="p">(</span><span class="n">outbuf</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">outbuf</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="kc">None</span><span class="p">,</span> <span class="n">outbuf</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+            <span class="n">vxc</span> <span class="o">=</span> <span class="p">[</span><span class="n">outbuf</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">outbuf</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="kc">None</span><span class="p">,</span> <span class="n">outbuf</span><span class="p">[</span><span class="mi">3</span><span class="p">]]</span>
         <span class="k">if</span> <span class="n">deriv</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="n">fxc</span> <span class="o">=</span> <span class="p">(</span><span class="n">outbuf</span><span class="p">[</span><span class="n">XC_D200</span><span class="p">],</span> <span class="n">outbuf</span><span class="p">[</span><span class="n">XC_D110</span><span class="p">],</span> <span class="n">outbuf</span><span class="p">[</span><span class="n">XC_D020</span><span class="p">],</span>
-                   <span class="kc">None</span><span class="p">,</span> <span class="n">outbuf</span><span class="p">[</span><span class="n">XC_D002</span><span class="p">],</span> <span class="kc">None</span><span class="p">,</span> <span class="n">outbuf</span><span class="p">[</span><span class="n">XC_D101</span><span class="p">],</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">outbuf</span><span class="p">[</span><span class="n">XC_D011</span><span class="p">])</span>
+            <span class="n">fxc</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="c1"># v2rho2, v2rhosigma, v2sigma2,</span>
+                <span class="n">outbuf</span><span class="p">[</span><span class="n">XC_D200</span><span class="p">],</span> <span class="n">outbuf</span><span class="p">[</span><span class="n">XC_D110</span><span class="p">],</span> <span class="n">outbuf</span><span class="p">[</span><span class="n">XC_D020</span><span class="p">],</span>
+                <span class="c1"># v2lapl2, v2tau2,</span>
+                <span class="kc">None</span><span class="p">,</span> <span class="n">outbuf</span><span class="p">[</span><span class="n">XC_D002</span><span class="p">],</span>
+                <span class="c1"># v2rholapl, v2rhotau,</span>
+                <span class="kc">None</span><span class="p">,</span> <span class="n">outbuf</span><span class="p">[</span><span class="n">XC_D101</span><span class="p">],</span>
+                <span class="c1"># v2lapltau, v2sigmalapl, v2sigmatau,</span>
+                <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">outbuf</span><span class="p">[</span><span class="n">XC_D011</span><span class="p">]]</span>
         <span class="k">if</span> <span class="n">deriv</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
-            <span class="n">kxc</span> <span class="o">=</span> <span class="p">(</span><span class="n">outbuf</span><span class="p">[</span><span class="n">XC_D300</span><span class="p">],</span> <span class="n">outbuf</span><span class="p">[</span><span class="n">XC_D210</span><span class="p">],</span> <span class="n">outbuf</span><span class="p">[</span><span class="n">XC_D120</span><span class="p">],</span> <span class="n">outbuf</span><span class="p">[</span><span class="n">XC_D030</span><span class="p">],</span>
-                   <span class="n">outbuf</span><span class="p">[</span><span class="n">XC_D201</span><span class="p">],</span> <span class="n">outbuf</span><span class="p">[</span><span class="n">XC_D111</span><span class="p">],</span> <span class="n">outbuf</span><span class="p">[</span><span class="n">XC_D102</span><span class="p">],</span>
-                   <span class="n">outbuf</span><span class="p">[</span><span class="n">XC_D021</span><span class="p">],</span> <span class="n">outbuf</span><span class="p">[</span><span class="n">XC_D012</span><span class="p">],</span> <span class="n">outbuf</span><span class="p">[</span><span class="n">XC_D003</span><span class="p">])</span>
-    <span class="k">elif</span> <span class="n">nvar</span> <span class="o">==</span> <span class="mi">7</span><span class="p">:</span>
+            <span class="n">kxc</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="c1"># v3rho3, v3rho2sigma, v3rhosigma2, v3sigma3,</span>
+                <span class="n">outbuf</span><span class="p">[</span><span class="n">XC_D300</span><span class="p">],</span> <span class="n">outbuf</span><span class="p">[</span><span class="n">XC_D210</span><span class="p">],</span> <span class="n">outbuf</span><span class="p">[</span><span class="n">XC_D120</span><span class="p">],</span> <span class="n">outbuf</span><span class="p">[</span><span class="n">XC_D030</span><span class="p">],</span>
+                <span class="c1"># v3rho2lapl, v3rho2tau,</span>
+                <span class="kc">None</span><span class="p">,</span> <span class="n">outbuf</span><span class="p">[</span><span class="n">XC_D201</span><span class="p">],</span>
+                <span class="c1"># v3rhosigmalapl, v3rhosigmatau,</span>
+                <span class="kc">None</span><span class="p">,</span> <span class="n">outbuf</span><span class="p">[</span><span class="n">XC_D111</span><span class="p">],</span>
+                <span class="c1"># v3rholapl2, v3rholapltau, v3rhotau2,</span>
+                <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">outbuf</span><span class="p">[</span><span class="n">XC_D102</span><span class="p">],</span>
+                <span class="c1"># v3sigma2lapl, v3sigma2tau,</span>
+                <span class="kc">None</span><span class="p">,</span> <span class="n">outbuf</span><span class="p">[</span><span class="n">XC_D021</span><span class="p">],</span>
+                <span class="c1"># v3sigmalapl2, v3sigmalapltau, v3sigmatau2,</span>
+                <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">outbuf</span><span class="p">[</span><span class="n">XC_D012</span><span class="p">],</span>
+                <span class="c1"># v3lapl3, v3lapl2tau, v3lapltau2, v3tau3)</span>
+                <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">outbuf</span><span class="p">[</span><span class="n">XC_D003</span><span class="p">]]</span>
+    <span class="k">elif</span> <span class="n">xctype</span> <span class="o">==</span> <span class="s1">'U-MGGA'</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">deriv</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">vxc</span> <span class="o">=</span> <span class="p">(</span><span class="n">outbuf</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">outbuf</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">6</span><span class="p">]</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">outbuf</span><span class="p">[</span><span class="mi">6</span><span class="p">:</span><span class="mi">8</span><span class="p">]</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">deriv</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="n">fxc</span> <span class="o">=</span> <span class="p">(</span><span class="n">outbuf</span><span class="p">[[</span><span class="n">XC_D2000000</span><span class="p">,</span><span class="n">XC_D1100000</span><span class="p">,</span><span class="n">XC_D0200000</span><span class="p">]]</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
-                   <span class="n">outbuf</span><span class="p">[[</span><span class="n">XC_D1010000</span><span class="p">,</span><span class="n">XC_D1001000</span><span class="p">,</span><span class="n">XC_D1000100</span><span class="p">,</span>
-                           <span class="n">XC_D0110000</span><span class="p">,</span><span class="n">XC_D0101000</span><span class="p">,</span><span class="n">XC_D0100100</span><span class="p">]]</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
-                   <span class="n">outbuf</span><span class="p">[[</span><span class="n">XC_D0020000</span><span class="p">,</span><span class="n">XC_D0011000</span><span class="p">,</span><span class="n">XC_D0010100</span><span class="p">,</span>
-                           <span class="n">XC_D0002000</span><span class="p">,</span><span class="n">XC_D0001100</span><span class="p">,</span><span class="n">XC_D0000200</span><span class="p">]]</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
-                   <span class="kc">None</span><span class="p">,</span>
-                   <span class="n">outbuf</span><span class="p">[[</span><span class="n">XC_D0000020</span><span class="p">,</span><span class="n">XC_D0000011</span><span class="p">,</span><span class="n">XC_D0000002</span><span class="p">]]</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
-                   <span class="kc">None</span><span class="p">,</span>
-                   <span class="n">outbuf</span><span class="p">[[</span><span class="n">XC_D1000010</span><span class="p">,</span><span class="n">XC_D1000001</span><span class="p">,</span><span class="n">XC_D0100010</span><span class="p">,</span><span class="n">XC_D0100001</span><span class="p">]]</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
-                   <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span>
-                   <span class="n">outbuf</span><span class="p">[[</span><span class="n">XC_D0010010</span><span class="p">,</span><span class="n">XC_D0010001</span><span class="p">,</span><span class="n">XC_D0001010</span><span class="p">,</span><span class="n">XC_D0001001</span><span class="p">,</span>
-                           <span class="n">XC_D0000110</span><span class="p">,</span><span class="n">XC_D0000101</span><span class="p">]]</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+            <span class="n">fxc</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="c1"># v2rho2, v2rhosigma, v2sigma2,</span>
+                <span class="n">outbuf</span><span class="p">[[</span><span class="n">XC_D2000000</span><span class="p">,</span><span class="n">XC_D1100000</span><span class="p">,</span><span class="n">XC_D0200000</span><span class="p">]]</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
+                <span class="n">outbuf</span><span class="p">[[</span><span class="n">XC_D1010000</span><span class="p">,</span><span class="n">XC_D1001000</span><span class="p">,</span><span class="n">XC_D1000100</span><span class="p">,</span>
+                        <span class="n">XC_D0110000</span><span class="p">,</span><span class="n">XC_D0101000</span><span class="p">,</span><span class="n">XC_D0100100</span><span class="p">]]</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
+                <span class="n">outbuf</span><span class="p">[[</span><span class="n">XC_D0020000</span><span class="p">,</span><span class="n">XC_D0011000</span><span class="p">,</span><span class="n">XC_D0010100</span><span class="p">,</span>
+                        <span class="n">XC_D0002000</span><span class="p">,</span><span class="n">XC_D0001100</span><span class="p">,</span><span class="n">XC_D0000200</span><span class="p">]]</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
+                <span class="c1"># v2lapl2, v2tau2,</span>
+                <span class="kc">None</span><span class="p">,</span>
+                <span class="n">outbuf</span><span class="p">[[</span><span class="n">XC_D0000020</span><span class="p">,</span><span class="n">XC_D0000011</span><span class="p">,</span><span class="n">XC_D0000002</span><span class="p">]]</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
+                <span class="c1"># v2rholapl, v2rhotau,</span>
+                <span class="kc">None</span><span class="p">,</span>
+                <span class="n">outbuf</span><span class="p">[[</span><span class="n">XC_D1000010</span><span class="p">,</span><span class="n">XC_D1000001</span><span class="p">,</span><span class="n">XC_D0100010</span><span class="p">,</span><span class="n">XC_D0100001</span><span class="p">]]</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
+                <span class="c1"># v2lapltau, v2sigmalapl, v2sigmatau,</span>
+                <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="n">outbuf</span><span class="p">[[</span><span class="n">XC_D0010010</span><span class="p">,</span><span class="n">XC_D0010001</span><span class="p">,</span><span class="n">XC_D0001010</span><span class="p">,</span><span class="n">XC_D0001001</span><span class="p">,</span>
+                        <span class="n">XC_D0000110</span><span class="p">,</span><span class="n">XC_D0000101</span><span class="p">]]</span><span class="o">.</span><span class="n">T</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">deriv</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
-            <span class="n">kxc</span> <span class="o">=</span> <span class="p">(</span><span class="n">outbuf</span><span class="p">[[</span><span class="n">XC_D3000000</span><span class="p">,</span><span class="n">XC_D2100000</span><span class="p">,</span><span class="n">XC_D1200000</span><span class="p">,</span><span class="n">XC_D0300000</span><span class="p">]]</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
-                   <span class="n">outbuf</span><span class="p">[[</span><span class="n">XC_D2010000</span><span class="p">,</span><span class="n">XC_D2001000</span><span class="p">,</span><span class="n">XC_D2000100</span><span class="p">,</span>
-                           <span class="n">XC_D1110000</span><span class="p">,</span><span class="n">XC_D1101000</span><span class="p">,</span><span class="n">XC_D1100100</span><span class="p">,</span>
-                           <span class="n">XC_D0210000</span><span class="p">,</span><span class="n">XC_D0201000</span><span class="p">,</span><span class="n">XC_D0200100</span><span class="p">]]</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
-                   <span class="n">outbuf</span><span class="p">[[</span><span class="n">XC_D1020000</span><span class="p">,</span><span class="n">XC_D1011000</span><span class="p">,</span><span class="n">XC_D1010100</span><span class="p">,</span><span class="n">XC_D1002000</span><span class="p">,</span><span class="n">XC_D1001100</span><span class="p">,</span><span class="n">XC_D1000200</span><span class="p">,</span>
-                           <span class="n">XC_D0120000</span><span class="p">,</span><span class="n">XC_D0111000</span><span class="p">,</span><span class="n">XC_D0110100</span><span class="p">,</span><span class="n">XC_D0102000</span><span class="p">,</span><span class="n">XC_D0101100</span><span class="p">,</span><span class="n">XC_D0100200</span><span class="p">]]</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
-                   <span class="n">outbuf</span><span class="p">[[</span><span class="n">XC_D0030000</span><span class="p">,</span><span class="n">XC_D0021000</span><span class="p">,</span><span class="n">XC_D0020100</span><span class="p">,</span><span class="n">XC_D0012000</span><span class="p">,</span><span class="n">XC_D0011100</span><span class="p">,</span>
-                           <span class="n">XC_D0010200</span><span class="p">,</span><span class="n">XC_D0003000</span><span class="p">,</span><span class="n">XC_D0002100</span><span class="p">,</span><span class="n">XC_D0001200</span><span class="p">,</span><span class="n">XC_D0000300</span><span class="p">]]</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
-                   <span class="n">outbuf</span><span class="p">[[</span><span class="n">XC_D2000010</span><span class="p">,</span><span class="n">XC_D2000001</span><span class="p">,</span><span class="n">XC_D1100010</span><span class="p">,</span><span class="n">XC_D1100001</span><span class="p">,</span><span class="n">XC_D0200010</span><span class="p">,</span><span class="n">XC_D0200001</span><span class="p">]]</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
-                   <span class="n">outbuf</span><span class="p">[[</span><span class="n">XC_D1010010</span><span class="p">,</span><span class="n">XC_D1010001</span><span class="p">,</span><span class="n">XC_D1001010</span><span class="p">,</span><span class="n">XC_D1001001</span><span class="p">,</span><span class="n">XC_D1000110</span><span class="p">,</span><span class="n">XC_D1000101</span><span class="p">,</span>
-                           <span class="n">XC_D0110010</span><span class="p">,</span><span class="n">XC_D0110001</span><span class="p">,</span><span class="n">XC_D0101010</span><span class="p">,</span><span class="n">XC_D0101001</span><span class="p">,</span><span class="n">XC_D0100110</span><span class="p">,</span><span class="n">XC_D0100101</span><span class="p">]]</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
-                   <span class="n">outbuf</span><span class="p">[[</span><span class="n">XC_D1000020</span><span class="p">,</span><span class="n">XC_D1000011</span><span class="p">,</span><span class="n">XC_D1000002</span><span class="p">,</span><span class="n">XC_D0100020</span><span class="p">,</span><span class="n">XC_D0100011</span><span class="p">,</span><span class="n">XC_D0100002</span><span class="p">]]</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
-                   <span class="n">outbuf</span><span class="p">[[</span><span class="n">XC_D0020010</span><span class="p">,</span><span class="n">XC_D0020001</span><span class="p">,</span><span class="n">XC_D0011010</span><span class="p">,</span><span class="n">XC_D0011001</span><span class="p">,</span><span class="n">XC_D0010110</span><span class="p">,</span><span class="n">XC_D0010101</span><span class="p">,</span>
-                           <span class="n">XC_D0002010</span><span class="p">,</span><span class="n">XC_D0002001</span><span class="p">,</span><span class="n">XC_D0001110</span><span class="p">,</span><span class="n">XC_D0001101</span><span class="p">,</span><span class="n">XC_D0000210</span><span class="p">,</span><span class="n">XC_D0000201</span><span class="p">]]</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
-                   <span class="n">outbuf</span><span class="p">[[</span><span class="n">XC_D0010020</span><span class="p">,</span><span class="n">XC_D0010011</span><span class="p">,</span><span class="n">XC_D0010002</span><span class="p">,</span>
-                           <span class="n">XC_D0001020</span><span class="p">,</span><span class="n">XC_D0001011</span><span class="p">,</span><span class="n">XC_D0001002</span><span class="p">,</span>
-                           <span class="n">XC_D0000120</span><span class="p">,</span><span class="n">XC_D0000111</span><span class="p">,</span><span class="n">XC_D0000102</span><span class="p">]]</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
-                   <span class="n">outbuf</span><span class="p">[[</span><span class="n">XC_D0000030</span><span class="p">,</span><span class="n">XC_D0000021</span><span class="p">,</span><span class="n">XC_D0000012</span><span class="p">,</span><span class="n">XC_D0000003</span><span class="p">]]</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+            <span class="n">kxc</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="c1"># v3rho3, v3rho2sigma, v3rhosigma2, v3sigma3,</span>
+                <span class="n">outbuf</span><span class="p">[[</span><span class="n">XC_D3000000</span><span class="p">,</span><span class="n">XC_D2100000</span><span class="p">,</span><span class="n">XC_D1200000</span><span class="p">,</span><span class="n">XC_D0300000</span><span class="p">]]</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
+                <span class="n">outbuf</span><span class="p">[[</span><span class="n">XC_D2010000</span><span class="p">,</span><span class="n">XC_D2001000</span><span class="p">,</span><span class="n">XC_D2000100</span><span class="p">,</span>
+                        <span class="n">XC_D1110000</span><span class="p">,</span><span class="n">XC_D1101000</span><span class="p">,</span><span class="n">XC_D1100100</span><span class="p">,</span>
+                        <span class="n">XC_D0210000</span><span class="p">,</span><span class="n">XC_D0201000</span><span class="p">,</span><span class="n">XC_D0200100</span><span class="p">]]</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
+                <span class="n">outbuf</span><span class="p">[[</span><span class="n">XC_D1020000</span><span class="p">,</span><span class="n">XC_D1011000</span><span class="p">,</span><span class="n">XC_D1010100</span><span class="p">,</span><span class="n">XC_D1002000</span><span class="p">,</span><span class="n">XC_D1001100</span><span class="p">,</span><span class="n">XC_D1000200</span><span class="p">,</span>
+                        <span class="n">XC_D0120000</span><span class="p">,</span><span class="n">XC_D0111000</span><span class="p">,</span><span class="n">XC_D0110100</span><span class="p">,</span><span class="n">XC_D0102000</span><span class="p">,</span><span class="n">XC_D0101100</span><span class="p">,</span><span class="n">XC_D0100200</span><span class="p">]]</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
+                <span class="n">outbuf</span><span class="p">[[</span><span class="n">XC_D0030000</span><span class="p">,</span><span class="n">XC_D0021000</span><span class="p">,</span><span class="n">XC_D0020100</span><span class="p">,</span><span class="n">XC_D0012000</span><span class="p">,</span><span class="n">XC_D0011100</span><span class="p">,</span>
+                        <span class="n">XC_D0010200</span><span class="p">,</span><span class="n">XC_D0003000</span><span class="p">,</span><span class="n">XC_D0002100</span><span class="p">,</span><span class="n">XC_D0001200</span><span class="p">,</span><span class="n">XC_D0000300</span><span class="p">]]</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
+                <span class="c1"># v3rho2lapl, v3rho2tau,</span>
+                <span class="kc">None</span><span class="p">,</span>
+                <span class="n">outbuf</span><span class="p">[[</span><span class="n">XC_D2000010</span><span class="p">,</span><span class="n">XC_D2000001</span><span class="p">,</span><span class="n">XC_D1100010</span><span class="p">,</span><span class="n">XC_D1100001</span><span class="p">,</span><span class="n">XC_D0200010</span><span class="p">,</span><span class="n">XC_D0200001</span><span class="p">]]</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
+                <span class="c1"># v3rhosigmalapl, v3rhosigmatau,</span>
+                <span class="kc">None</span><span class="p">,</span>
+                <span class="n">outbuf</span><span class="p">[[</span><span class="n">XC_D1010010</span><span class="p">,</span><span class="n">XC_D1010001</span><span class="p">,</span><span class="n">XC_D1001010</span><span class="p">,</span><span class="n">XC_D1001001</span><span class="p">,</span><span class="n">XC_D1000110</span><span class="p">,</span><span class="n">XC_D1000101</span><span class="p">,</span>
+                        <span class="n">XC_D0110010</span><span class="p">,</span><span class="n">XC_D0110001</span><span class="p">,</span><span class="n">XC_D0101010</span><span class="p">,</span><span class="n">XC_D0101001</span><span class="p">,</span><span class="n">XC_D0100110</span><span class="p">,</span><span class="n">XC_D0100101</span><span class="p">]]</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
+                <span class="c1"># v3rholapl2, v3rholapltau, v3rhotau2,</span>
+                <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="n">outbuf</span><span class="p">[[</span><span class="n">XC_D1000020</span><span class="p">,</span><span class="n">XC_D1000011</span><span class="p">,</span><span class="n">XC_D1000002</span><span class="p">,</span><span class="n">XC_D0100020</span><span class="p">,</span><span class="n">XC_D0100011</span><span class="p">,</span><span class="n">XC_D0100002</span><span class="p">]]</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
+                <span class="c1"># v3sigma2lapl, v3sigma2tau,</span>
+                <span class="kc">None</span><span class="p">,</span>
+                <span class="n">outbuf</span><span class="p">[[</span><span class="n">XC_D0020010</span><span class="p">,</span><span class="n">XC_D0020001</span><span class="p">,</span><span class="n">XC_D0011010</span><span class="p">,</span><span class="n">XC_D0011001</span><span class="p">,</span><span class="n">XC_D0010110</span><span class="p">,</span><span class="n">XC_D0010101</span><span class="p">,</span>
+                        <span class="n">XC_D0002010</span><span class="p">,</span><span class="n">XC_D0002001</span><span class="p">,</span><span class="n">XC_D0001110</span><span class="p">,</span><span class="n">XC_D0001101</span><span class="p">,</span><span class="n">XC_D0000210</span><span class="p">,</span><span class="n">XC_D0000201</span><span class="p">]]</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
+                <span class="c1"># v3sigmalapl2, v3sigmalapltau, v3sigmatau2,</span>
+                <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="n">outbuf</span><span class="p">[[</span><span class="n">XC_D0010020</span><span class="p">,</span><span class="n">XC_D0010011</span><span class="p">,</span><span class="n">XC_D0010002</span><span class="p">,</span>
+                        <span class="n">XC_D0001020</span><span class="p">,</span><span class="n">XC_D0001011</span><span class="p">,</span><span class="n">XC_D0001002</span><span class="p">,</span>
+                        <span class="n">XC_D0000120</span><span class="p">,</span><span class="n">XC_D0000111</span><span class="p">,</span><span class="n">XC_D0000102</span><span class="p">]]</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
+                <span class="c1"># v3lapl3, v3lapl2tau, v3lapltau2, v3tau3)</span>
+                <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="n">outbuf</span><span class="p">[[</span><span class="n">XC_D0000030</span><span class="p">,</span><span class="n">XC_D0000021</span><span class="p">,</span><span class="n">XC_D0000012</span><span class="p">,</span><span class="n">XC_D0000003</span><span class="p">]]</span><span class="o">.</span><span class="n">T</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">exc</span><span class="p">,</span> <span class="n">vxc</span><span class="p">,</span> <span class="n">fxc</span><span class="p">,</span> <span class="n">kxc</span>
 
 
-<div class="viewcode-block" id="define_xc_"><a class="viewcode-back" href="../../../pyscf_api_docs/pyscf.dft.html#pyscf.dft.xcfun.define_xc_">[docs]</a><span class="k">def</span> <span class="nf">define_xc_</span><span class="p">(</span><span class="n">ni</span><span class="p">,</span> <span class="n">description</span><span class="p">,</span> <span class="n">xctype</span><span class="o">=</span><span class="s1">'LDA'</span><span class="p">,</span> <span class="n">hyb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">rsh</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)):</span>
-    <span class="sd">'''Define XC functional.  See also :func:`eval_xc` for the rules of input description.</span>
+<div class="viewcode-block" id="define_xc_">
+<a class="viewcode-back" href="../../../pyscf_api_docs/pyscf.dft.html#pyscf.dft.xcfun.define_xc_">[docs]</a>
+<span class="k">def</span> <span class="nf">define_xc_</span><span class="p">(</span><span class="n">ni</span><span class="p">,</span> <span class="n">description</span><span class="p">,</span> <span class="n">xctype</span><span class="o">=</span><span class="s1">'LDA'</span><span class="p">,</span> <span class="n">hyb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">rsh</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)):</span>
+<span class="w">    </span><span class="sd">'''Define XC functional.  See also :func:`eval_xc` for the rules of input description.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        ni : an instance of :class:`NumInt`</span>
@@ -1316,7 +1426,7 @@
         <span class="n">ni</span><span class="o">.</span><span class="n">rsh_coeff</span> <span class="o">=</span> <span class="k">lambda</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">rsh_coeff</span><span class="p">(</span><span class="n">description</span><span class="p">)</span>
         <span class="n">ni</span><span class="o">.</span><span class="n">_xc_type</span> <span class="o">=</span> <span class="k">lambda</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">xc_type</span><span class="p">(</span><span class="n">description</span><span class="p">)</span>
 
-    <span class="k">elif</span> <span class="n">callable</span><span class="p">(</span><span class="n">description</span><span class="p">):</span>
+    <span class="k">elif</span> <span class="nb">callable</span><span class="p">(</span><span class="n">description</span><span class="p">):</span>
         <span class="n">ni</span><span class="o">.</span><span class="n">eval_xc</span> <span class="o">=</span> <span class="n">description</span>
         <span class="n">ni</span><span class="o">.</span><span class="n">hybrid_coeff</span> <span class="o">=</span> <span class="k">lambda</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">hyb</span>
         <span class="n">ni</span><span class="o">.</span><span class="n">rsh_coeff</span> <span class="o">=</span> <span class="k">lambda</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">rsh</span>
@@ -1325,8 +1435,12 @@
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">'Unknown description </span><span class="si">%s</span><span class="s1">'</span> <span class="o">%</span> <span class="n">description</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">ni</span></div>
 
-<div class="viewcode-block" id="define_xc"><a class="viewcode-back" href="../../../pyscf_api_docs/pyscf.dft.html#pyscf.dft.xcfun.define_xc">[docs]</a><span class="k">def</span> <span class="nf">define_xc</span><span class="p">(</span><span class="n">ni</span><span class="p">,</span> <span class="n">description</span><span class="p">,</span> <span class="n">xctype</span><span class="o">=</span><span class="s1">'LDA'</span><span class="p">,</span> <span class="n">hyb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">rsh</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)):</span>
+
+<div class="viewcode-block" id="define_xc">
+<a class="viewcode-back" href="../../../pyscf_api_docs/pyscf.dft.html#pyscf.dft.xcfun.define_xc">[docs]</a>
+<span class="k">def</span> <span class="nf">define_xc</span><span class="p">(</span><span class="n">ni</span><span class="p">,</span> <span class="n">description</span><span class="p">,</span> <span class="n">xctype</span><span class="o">=</span><span class="s1">'LDA'</span><span class="p">,</span> <span class="n">hyb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">rsh</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)):</span>
     <span class="k">return</span> <span class="n">define_xc_</span><span class="p">(</span><span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">ni</span><span class="p">),</span> <span class="n">description</span><span class="p">,</span> <span class="n">xctype</span><span class="p">,</span> <span class="n">hyb</span><span class="p">,</span> <span class="n">rsh</span><span class="p">)</span></div>
+
 <span class="n">define_xc</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="n">define_xc_</span><span class="o">.</span><span class="vm">__doc__</span>
 </pre></div>
 
@@ -1352,7 +1466,7 @@
               
           </div>
             Created using
-            <a href="http://www.sphinx-doc.org/">Sphinx</a> 5.0.2.
+            <a href="http://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
              and
             <a href="https://github.com/bashtage/sphinx-material/">Material for
               Sphinx</a>

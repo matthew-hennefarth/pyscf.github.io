@@ -26,9 +26,11 @@ functionalities.
    user/tddft.rst
    user/solvent.rst
    user/qmmm.rst
+   user/md.rst
    user/df.rst
    user/pbc.rst
    user/eph.rst
    user/lo.rst
    user/sgx.rst
    user/geomopt.rst
+   user/reference.rst

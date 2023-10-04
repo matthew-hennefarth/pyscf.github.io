@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 
-<html lang="en">
+<html lang="en" data-content_root="../">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -48,16 +47,14 @@
   
   
     <title>pyscf &#8212; PySCF</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/material.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/css/pyscf.css" />
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="../_static/doctools.js"></script>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=92fd9be5" />
+    <link rel="stylesheet" type="text/css" href="../_static/material.css?v=79c92029" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/pyscf.css?v=9b431c29" />
+    <script src="../_static/documentation_options.js?v=c3c8ae58"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <link rel="shortcut icon" href="../_static/favicon-32x32.png"/>
+    <link rel="icon" href="../_static/favicon-32x32.png"/>
     <link rel="author" title="About these documents" href="../about.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -87,8 +84,7 @@
         <a href="../index.html" title="PySCF"
            class="md-header-nav__button md-logo">
           
-              <img src="../_static/pyscf-logo-white.svg" height="26"
-                   alt="PySCF logo">
+            &nbsp;
           
         </a>
       </div>
@@ -97,7 +93,7 @@
       </div>
       <div class="md-flex__cell md-flex__cell--stretch">
         <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
-          <span class="md-header-nav__topic">PySCF 2.0</span>
+          <span class="md-header-nav__topic">PySCF 2.3</span>
           <span class="md-header-nav__topic"> pyscf </span>
         </div>
       </div>
@@ -108,7 +104,7 @@
   <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
     <form class="md-search__form" action="../search.html" method="get" name="search">
-      <input type="text" class="md-search__input" name="q" placeholder="Search"
+      <input type="text" class="md-search__input" name="q" placeholder=""Search""
              autocapitalize="off" autocomplete="off" spellcheck="false"
              data-md-component="query" data-md-state="active">
       <label class="md-icon md-search__icon" for="__search"></label>
@@ -198,11 +194,11 @@
   <label class="md-nav__title md-nav__title--site" for="__drawer">
     <a href="../index.html" title="PySCF" class="md-nav__button md-logo">
       
-        <img src="../_static/pyscf-logo-white.svg" alt=" logo" width="48" height="48">
+        <img src="../_static/" alt=" logo" width="48" height="48">
       
     </a>
     <a href="../index.html"
-       title="PySCF">PySCF 2.0</a>
+       title="PySCF">PySCF 2.3</a>
   </label>
     <div class="md-nav__source">
       <a href="https://github.com/pyscf/pyscf/" title="Go to repository" class="md-source" data-md-source="github">
@@ -226,7 +222,28 @@
     <li class="md-nav__item">
     
     
-      <a href="../install.html" class="md-nav__link">Install</a>
+      <a href="../install.html" class="md-nav__link">Install PySCF</a>
+      
+    
+    </li>
+    <li class="md-nav__item">
+    
+    
+      <a href="../install.html#advanced-build-options" class="md-nav__link">Advanced build options</a>
+      
+    
+    </li>
+    <li class="md-nav__item">
+    
+    
+      <a href="../install.html#install-pyscf-extensions" class="md-nav__link">Install PySCF extensions</a>
+      
+    
+    </li>
+    <li class="md-nav__item">
+    
+    
+      <a href="../install.html#troubleshooting" class="md-nav__link">Troubleshooting</a>
       
     
     </li>
@@ -293,7 +310,7 @@
           <article class="md-content__inner md-typeset" role="main">
             
   <section id="pyscf">
-<h1 id="pyscf-api-docs-modules--page-root">pyscf<a class="headerlink" href="#pyscf-api-docs-modules--page-root" title="Permalink to this heading">¶</a></h1>
+<h1 id="pyscf-api-docs-modules--page-root">pyscf<a class="headerlink" href="#pyscf-api-docs-modules--page-root" title="Link to this heading">¶</a></h1>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="pyscf.html">pyscf package</a><ul>
@@ -302,15 +319,23 @@
 <li class="toctree-l4"><a class="reference internal" href="pyscf.adc.html#submodules">Submodules</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyscf.adc.html#module-pyscf.adc.dfadc">pyscf.adc.dfadc module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyscf.adc.html#module-pyscf.adc.radc">pyscf.adc.radc module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyscf.adc.html#module-pyscf.adc.radc_amplitudes">pyscf.adc.radc_amplitudes module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyscf.adc.html#module-pyscf.adc.radc_ao2mo">pyscf.adc.radc_ao2mo module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyscf.adc.html#module-pyscf.adc.radc_ea">pyscf.adc.radc_ea module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyscf.adc.html#module-pyscf.adc.radc_ip">pyscf.adc.radc_ip module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyscf.adc.html#module-pyscf.adc.radc_ip_cvs">pyscf.adc.radc_ip_cvs module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyscf.adc.html#module-pyscf.adc.uadc">pyscf.adc.uadc module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyscf.adc.html#module-pyscf.adc.uadc_amplitudes">pyscf.adc.uadc_amplitudes module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyscf.adc.html#module-pyscf.adc.uadc_ao2mo">pyscf.adc.uadc_ao2mo module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyscf.adc.html#module-pyscf.adc.uadc_ea">pyscf.adc.uadc_ea module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyscf.adc.html#module-pyscf.adc.uadc_ip">pyscf.adc.uadc_ip module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyscf.adc.html#module-pyscf.adc.uadc_ip_cvs">pyscf.adc.uadc_ip_cvs module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyscf.adc.html#module-pyscf.adc">Module contents</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="pyscf.agf2.html">pyscf.agf2 package</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="pyscf.agf2.html#submodules">Submodules</a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyscf.agf2.html#module-pyscf.agf2.aux">pyscf.agf2.aux module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyscf.agf2.html#module-pyscf.agf2.aux_space">pyscf.agf2.aux_space module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyscf.agf2.html#module-pyscf.agf2.chempot">pyscf.agf2.chempot module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyscf.agf2.html#module-pyscf.agf2.chkfile">pyscf.agf2.chkfile module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyscf.agf2.html#module-pyscf.agf2.dfragf2">pyscf.agf2.dfragf2 module</a></li>
@@ -327,6 +352,7 @@
 <li class="toctree-l4"><a class="reference internal" href="pyscf.ao2mo.html#submodules">Submodules</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyscf.ao2mo.html#module-pyscf.ao2mo.addons">pyscf.ao2mo.addons module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyscf.ao2mo.html#module-pyscf.ao2mo.incore">pyscf.ao2mo.incore module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyscf.ao2mo.html#module-pyscf.ao2mo.nrr_outcore">pyscf.ao2mo.nrr_outcore module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyscf.ao2mo.html#module-pyscf.ao2mo.outcore">pyscf.ao2mo.outcore module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyscf.ao2mo.html#module-pyscf.ao2mo.r_outcore">pyscf.ao2mo.r_outcore module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyscf.ao2mo.html#module-pyscf.ao2mo.semi_incore">pyscf.ao2mo.semi_incore module</a></li>
@@ -336,6 +362,7 @@
 <li class="toctree-l3"><a class="reference internal" href="pyscf.cc.html">pyscf.cc package</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="pyscf.cc.html#submodules">Submodules</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyscf.cc.html#module-pyscf.cc.addons">pyscf.cc.addons module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyscf.cc.html#module-pyscf.cc.bccd">pyscf.cc.bccd module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyscf.cc.html#module-pyscf.cc.ccd">pyscf.cc.ccd module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyscf.cc.html#module-pyscf.cc.ccsd">pyscf.cc.ccsd module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyscf.cc.html#module-pyscf.cc.ccsd_lambda">pyscf.cc.ccsd_lambda module</a></li>
@@ -357,6 +384,7 @@
 <li class="toctree-l4"><a class="reference internal" href="pyscf.cc.html#module-pyscf.cc.gccsd_t_rdm">pyscf.cc.gccsd_t_rdm module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyscf.cc.html#module-pyscf.cc.gccsd_t_slow">pyscf.cc.gccsd_t_slow module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyscf.cc.html#module-pyscf.cc.gintermediates">pyscf.cc.gintermediates module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyscf.cc.html#module-pyscf.cc.momgfccsd">pyscf.cc.momgfccsd module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyscf.cc.html#module-pyscf.cc.qcisd">pyscf.cc.qcisd module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyscf.cc.html#module-pyscf.cc.qcisd_slow">pyscf.cc.qcisd_slow module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyscf.cc.html#module-pyscf.cc.qcisd_t">pyscf.cc.qcisd_t module</a></li>
@@ -420,6 +448,7 @@
 <li class="toctree-l4"><a class="reference internal" href="pyscf.dft.html#module-pyscf.dft.gks_symm">pyscf.dft.gks_symm module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyscf.dft.html#module-pyscf.dft.libxc">pyscf.dft.libxc module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyscf.dft.html#module-pyscf.dft.numint">pyscf.dft.numint module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyscf.dft.html#module-pyscf.dft.numint2c">pyscf.dft.numint2c module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyscf.dft.html#module-pyscf.dft.r_numint">pyscf.dft.r_numint module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyscf.dft.html#module-pyscf.dft.radi">pyscf.dft.radi module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyscf.dft.html#module-pyscf.dft.rks">pyscf.dft.rks module</a></li>
@@ -429,6 +458,7 @@
 <li class="toctree-l4"><a class="reference internal" href="pyscf.dft.html#module-pyscf.dft.sap_data">pyscf.dft.sap_data module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyscf.dft.html#module-pyscf.dft.uks">pyscf.dft.uks module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyscf.dft.html#module-pyscf.dft.uks_symm">pyscf.dft.uks_symm module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyscf.dft.html#module-pyscf.dft.xc_deriv">pyscf.dft.xc_deriv module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyscf.dft.html#module-pyscf.dft.xcfun">pyscf.dft.xcfun module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyscf.dft.html#module-pyscf.dft">Module contents</a></li>
 </ul>
@@ -452,8 +482,10 @@
 <li class="toctree-l4"><a class="reference internal" href="pyscf.fci.html#module-pyscf.fci.direct_spin0">pyscf.fci.direct_spin0 module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyscf.fci.html#module-pyscf.fci.direct_spin0_symm">pyscf.fci.direct_spin0_symm module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyscf.fci.html#module-pyscf.fci.direct_spin1">pyscf.fci.direct_spin1 module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyscf.fci.html#module-pyscf.fci.direct_spin1_cyl_sym">pyscf.fci.direct_spin1_cyl_sym module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyscf.fci.html#module-pyscf.fci.direct_spin1_symm">pyscf.fci.direct_spin1_symm module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyscf.fci.html#module-pyscf.fci.direct_uhf">pyscf.fci.direct_uhf module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyscf.fci.html#module-pyscf.fci.fci_dhf_slow">pyscf.fci.fci_dhf_slow module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyscf.fci.html#module-pyscf.fci.fci_slow">pyscf.fci.fci_slow module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyscf.fci.html#module-pyscf.fci.rdm">pyscf.fci.rdm module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyscf.fci.html#module-pyscf.fci.selected_ci">pyscf.fci.selected_ci module</a></li>
@@ -521,7 +553,9 @@
 <li class="toctree-l4"><a class="reference internal" href="pyscf.gw.html#module-pyscf.gw.gw_cd">pyscf.gw.gw_cd module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyscf.gw.html#module-pyscf.gw.gw_exact">pyscf.gw.gw_exact module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyscf.gw.html#module-pyscf.gw.gw_slow">pyscf.gw.gw_slow module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyscf.gw.html#module-pyscf.gw.rpa">pyscf.gw.rpa module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyscf.gw.html#module-pyscf.gw.ugw_ac">pyscf.gw.ugw_ac module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyscf.gw.html#module-pyscf.gw.urpa">pyscf.gw.urpa module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyscf.gw.html#module-pyscf.gw">Module contents</a></li>
 </ul>
 </li>
@@ -549,7 +583,7 @@
 <li class="toctree-l4"><a class="reference internal" href="pyscf.lib.html#pyscf-lib-libfci-module">pyscf.lib.libfci module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyscf.lib.html#pyscf-lib-libmcscf-module">pyscf.lib.libmcscf module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyscf.lib.html#pyscf-lib-libnp-helper-module">pyscf.lib.libnp_helper module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyscf.lib.html#pyscf-lib-libopenblas-r0-da994f36-module">pyscf.lib.libopenblas-r0-da994f36 module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyscf.lib.html#pyscf-lib-libopenblas-r0-f650aae0-module">pyscf.lib.libopenblas-r0-f650aae0 module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyscf.lib.html#pyscf-lib-libpbc-module">pyscf.lib.libpbc module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyscf.lib.html#pyscf-lib-libri-module">pyscf.lib.libri module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyscf.lib.html#pyscf-lib-libxc-itrf-module">pyscf.lib.libxc_itrf module</a></li>
@@ -581,6 +615,7 @@
 <li class="toctree-l4"><a class="reference internal" href="pyscf.mcscf.html#submodules">Submodules</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyscf.mcscf.html#module-pyscf.mcscf.PiOS">pyscf.mcscf.PiOS module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyscf.mcscf.html#module-pyscf.mcscf.addons">pyscf.mcscf.addons module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyscf.mcscf.html#module-pyscf.mcscf.apc">pyscf.mcscf.apc module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyscf.mcscf.html#module-pyscf.mcscf.avas">pyscf.mcscf.avas module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyscf.mcscf.html#module-pyscf.mcscf.casci">pyscf.mcscf.casci module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyscf.mcscf.html#module-pyscf.mcscf.casci_symm">pyscf.mcscf.casci_symm module</a></li>
@@ -598,6 +633,13 @@
 <li class="toctree-l4"><a class="reference internal" href="pyscf.mcscf.html#module-pyscf.mcscf.umc2step">pyscf.mcscf.umc2step module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyscf.mcscf.html#module-pyscf.mcscf.umc_ao2mo">pyscf.mcscf.umc_ao2mo module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyscf.mcscf.html#module-pyscf.mcscf">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyscf.md.html">pyscf.md package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyscf.md.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyscf.md.html#module-pyscf.md.distributions">pyscf.md.distributions module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyscf.md.html#module-pyscf.md.integrators">pyscf.md.integrators module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyscf.md.html#module-pyscf.md">Module contents</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="pyscf.mp.html">pyscf.mp package</a><ul>
@@ -635,6 +677,7 @@
 <li class="toctree-l4"><a class="reference internal" href="pyscf.scf.html#submodules">Submodules</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyscf.scf.html#module-pyscf.scf.addons">pyscf.scf.addons module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyscf.scf.html#module-pyscf.scf.atom_hf">pyscf.scf.atom_hf module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyscf.scf.html#module-pyscf.scf.atom_ks">pyscf.scf.atom_ks module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyscf.scf.html#module-pyscf.scf.chkfile">pyscf.scf.chkfile module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyscf.scf.html#module-pyscf.scf.cphf">pyscf.scf.cphf module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyscf.scf.html#module-pyscf.scf.dhf">pyscf.scf.dhf module</a></li>
@@ -695,6 +738,10 @@
 <li class="toctree-l3"><a class="reference internal" href="pyscf.tdscf.html">pyscf.tdscf package</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="pyscf.tdscf.html#submodules">Submodules</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyscf.tdscf.html#module-pyscf.tdscf.common_slow">pyscf.tdscf.common_slow module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyscf.tdscf.html#module-pyscf.tdscf.dhf">pyscf.tdscf.dhf module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyscf.tdscf.html#module-pyscf.tdscf.dks">pyscf.tdscf.dks module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyscf.tdscf.html#module-pyscf.tdscf.ghf">pyscf.tdscf.ghf module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyscf.tdscf.html#module-pyscf.tdscf.gks">pyscf.tdscf.gks module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyscf.tdscf.html#module-pyscf.tdscf.proxy">pyscf.tdscf.proxy module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyscf.tdscf.html#module-pyscf.tdscf.rhf">pyscf.tdscf.rhf module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyscf.tdscf.html#module-pyscf.tdscf.rhf_slow">pyscf.tdscf.rhf_slow module</a></li>
@@ -721,9 +768,13 @@
 </li>
 <li class="toctree-l3"><a class="reference internal" href="pyscf.x2c.html">pyscf.x2c package</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="pyscf.x2c.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyscf.x2c.html#module-pyscf.x2c.dft">pyscf.x2c.dft module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyscf.x2c.html#module-pyscf.x2c.newton_ah">pyscf.x2c.newton_ah module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyscf.x2c.html#module-pyscf.x2c.sfx2c1e">pyscf.x2c.sfx2c1e module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyscf.x2c.html#module-pyscf.x2c.sfx2c1e_grad">pyscf.x2c.sfx2c1e_grad module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyscf.x2c.html#module-pyscf.x2c.sfx2c1e_hess">pyscf.x2c.sfx2c1e_hess module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyscf.x2c.html#module-pyscf.x2c.stability">pyscf.x2c.stability module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyscf.x2c.html#module-pyscf.x2c.tdscf">pyscf.x2c.tdscf module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyscf.x2c.html#module-pyscf.x2c.x2c">pyscf.x2c.x2c module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyscf.x2c.html#module-pyscf.x2c">Module contents</a></li>
 </ul>
@@ -737,6 +788,7 @@
 <li class="toctree-l4"><a class="reference internal" href="pyscf.html#how-to-use">How to use</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="pyscf.html#pyscf.M"><code class="docutils literal notranslate"><span class="pre">M()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -768,7 +820,7 @@
               
           </div>
             Created using
-            <a href="http://www.sphinx-doc.org/">Sphinx</a> 5.0.2.
+            <a href="http://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
              and
             <a href="https://github.com/bashtage/sphinx-material/">Material for
               Sphinx</a>

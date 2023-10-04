@@ -12,6 +12,14 @@ pyscf.cc.addons module
    :undoc-members:
    :show-inheritance:
 
+pyscf.cc.bccd module
+--------------------
+
+.. automodule:: pyscf.cc.bccd
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 pyscf.cc.ccd module
 -------------------
 
@@ -176,6 +184,14 @@ pyscf.cc.gintermediates module
 ------------------------------
 
 .. automodule:: pyscf.cc.gintermediates
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+pyscf.cc.momgfccsd module
+-------------------------
+
+.. automodule:: pyscf.cc.momgfccsd
    :members:
    :undoc-members:
    :show-inheritance:
